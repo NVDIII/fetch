@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch</title>
+    <style>
+        body {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        th {
+            padding:10px;
+            background-color:black;
+            color:white;
+        }
+    </style>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>cloudcover</th>
+            <th>lifted_index</th>
+            <th>prec_type</th>
+            <th>rh2mCell</th>
+            <th>seeing</th>
+            <th>temp2m</th>
+            <th>timepoint</th>
+            <th>transparency</th>
+        </tr>
+    </table>
+
+    <script>
+        fetch('https://www.7timer.info/bin/astro.php?lon=113.2&lat=23.1&ac=0&unit=metric&output=json&tzshift=0')
+            .then((response) => response.json())
+            .then((data) => {
+                const dataseries = data.dataseries;
+                const table = document.querySelector('table');
+                dataseries.forEach((entry) => {
+                    const row = table.insertRow(-1);
+                    const cloudcoverCell = row.insertCell(0);
+                    const lifted_indexCell = row.insertCell(1);
+                    const prec_typeCell = row.insertCell(2);
+                    const rh2mCell = row.insertCell(3);
+                    const seeingCell = row.insertCell(4);
+                    const temp2mCell = row.insertCell(5);
+                    const timepointCell = row.insertCell(6);
+                    const transparency = row.insertCell(7);
+
+                    cloudcoverCell.innerHTML = entry.cloudcover;
+                    lifted_indexCell.innerHTML = entry.lifted_index;
+                    prec_typeCell.innerHTML = entry.prec_type;
+                    rh2mCell.innerHTML = entry.rh2m;
+                    seeingCell.innerHTML = entry.seeing;
+                    temp2mCell.innerHTML = entry.temp2m;
+                    timepointCell.innerHTML = entry.timepoint;
+                    transparency.innerHTML = entry.transparency;
+                });
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>
